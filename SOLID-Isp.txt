@@ -1,0 +1,27 @@
+Interface Segregation Principle:
+
+This emphasizes that the clients should not depend on interfaces that they do not use. Interfaces should be cohesive, therefore, they should represent a single, well-defined responsability. 
+
+If a class only needs a part of the methods in an interface, it should not be forced to implement the entire interface.
+
+Interfaces must be cohesive.
+
+Instead of having a single interface with many unrelated methods, create multiple interfaces, each representing a cohesive method group. Classes can then implement the specific interfaces they need.
+
+Example:
+public interface DocumentProcessor {
+    void read();
+    void print();
+}
+
+The problem with this approach is that it forces all classes to implement both read and print methods, even if they don't need both functionalities. This violates the Interface Segregation Principle.
+
+public interface Readable {
+    void read();
+}
+
+public interface Printable {
+    void print();
+}
+
+A common analogy used to explain ISP is that of a remote control. If you have a TV remote control, it shouldn't have buttons for controlling the microwave or other unrelated devices. Each remote control (interface) should be specific to the device it's meant for. This ensures that clients are not coupled to methods they don't use.

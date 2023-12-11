@@ -1,0 +1,51 @@
+Dependency Inversion Principle:
+
+This principle focuses on ensuring that classes should be dependent on abstractions. Abstractions should not depend on concrete classes, rather on other abstractions. Concrete classes should depend on abstractions.
+
+Example of bad implementation:
+
+class NotificationService {
+    void sendEmailNotification(String recipient, String message) {
+        // Implementation for sending an email notification
+    }
+    
+    void sendSMSNotification(String recipient, String message) {
+        // Implementation for sending an SMS notification
+    }
+}
+
+In this example, The notification service is dependent on concrete sender methods. Changes to the sender methods would require modifications to the abstract classes too. 
+
+Better implementation:
+
+interface INotificationSender {
+    void sendNotification(String recipient, String message);
+}
+
+class EmailNotificationSender implements INotificationSender {
+    @Override
+    public void sendNotification(String recipient, String message) {
+        // Implementation for sending an email notification
+    }
+}
+
+class SMSNotificationSender implements INotificationSender {
+    @Override
+    public void sendNotification(String recipient, String message) {
+        // Implementation for sending an SMS notification
+    }
+}
+
+class NotificationService {
+    private final INotificationSender sender;
+
+    public NotificationService(INotificationSender sender) {
+        this.sender = sender;
+    }
+
+    void sendNotification(String recipient, String message) {
+        sender.sendNotification(recipient, message);
+    }
+}
+
+In this implementation, the notification service depends on the interface rather than the concrete sender methods, this allows you to change or extend the sender class without having to change the notification service.

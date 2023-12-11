@@ -1,0 +1,63 @@
+Single Responsability principle: 
+
+Each class should have a single, well-defined responsability. This means it performs tasks focused in one aspect of the application. Every attribute (state) and method (behavior) within the class should be directly related to and serve the primary responsibility of the class. By doing that you can ensure that changes to this class will not affect other functionalities of the system and also this class could be re-used and better maintained.
+
+========= Example ========= 
+
+public class Order {
+    private int orderNumber;
+    private List<OrderItem> items;
+    
+    public void calculateTotalPrice() {
+        // Calculate the total price of the order
+    }
+    
+    public void printInvoice() {
+        // Generate and print an invoice
+    }
+    
+    public void saveToDatabase() {
+        // Save the order to a database
+    }
+}
+
+This class is doing more than it should and it should be broken down into separate classes so that each can perform a task:
+public class Order {
+    private int orderNumber;
+    private List<OrderItem> items;
+    
+    public double calculateTotalPrice() {
+        // Calculate the total price of the order
+    }
+}
+
+public class InvoicePrinter {
+    public void printInvoice(Order order) {
+        // Generate and print an invoice for the order
+    }
+}
+
+public class OrderRepository {
+    public void saveToDatabase(Order order) {
+        // Save the order to a database
+    }
+}
+
+In the refactored version, each class is dealing with one aspect/feature of the application, which also reduces the risk of issues or bugs if a change is made to a class.
+
+========= Things to be careful with this principle =========
+
+- Overly Fine-Grained Classes:
+This happens when an excessive number of small classes is created leading to a difficult system to follow. Balance is key.
+
+- Complexity Shift: 
+The complexity of the system is the same, the responsabilities are only redistributed to different classes. You may end up with more classes and its necessary to co-ordinate the interactions between these.
+
+- Inefficiency: 
+Having many small classes with single responsibilities can introduce inefficiency, especially in cases where significant data needs to be passed between these classes. This can result in performance overhead due to the constant creation and destruction of objects.
+
+- Difficulty in Identifying Responsibilities: 
+Determining what constitutes a single responsibility can be subjective and context-dependent. Different developers may interpret the principle differently, leading to varying designs. Identifying the "right" responsibilities for a class can be challenging.
+
+
+

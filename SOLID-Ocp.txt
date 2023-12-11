@@ -1,0 +1,22 @@
+Open-Closed Principle:
+
+This principle emphasizes that the software should be open for extension but not open for change in functionality. If a software is already tested and proven to work, it should not be allowed to change its functionality, only extension. 
+Once a class or module is stable and working correctly, you shouldn't change it to accommodate new functionality. You should be able to extend the class to add new features without touching its existing code.
+
+Example:
+
+// Original Shape class that calculates area
+class Shape {
+    public double calculateArea() {
+        return 0.0;
+    }
+}
+
+// New requirement: Calculate the perimeter of shapes
+class ShapeWithPerimeter extends Shape {
+    public double calculatePerimeter() {
+        return 0.0;
+    }
+}
+
+The original class Shape does not have to change to accomodate a new class that performs a different calculation. This is achieved through abstraction and encapsulation. 

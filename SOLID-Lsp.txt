@@ -1,0 +1,40 @@
+Liskov Substitution Principle: 
+
+This principle helps ensure that inheritance relationships respect behavioral contracts. It promotes the idea that subclasses should be able to substitute their base classes without introducing unexpected behavior. 
+
+class Rectangle {
+    private int width;
+    private int height;
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int calculateArea() {
+        return width * height;
+    }
+}
+
+In this example, we have a Rectangle class with width and height attributes and methods to set these attributes and calculate the area.
+
+class Square extends Rectangle {
+    @Override
+    public void setWidth(int width) {
+        super.setWidth(width);
+        super.setHeight(width);
+    }
+
+    @Override
+    public void setHeight(int height) {
+        super.setWidth(height);
+        super.setHeight(height);
+    }
+}
+
+The square is a rectangle, however, a square enforces that the height and width of the object are the same, therefore, the square class should substitute the rectangle class without altering its functionality. 
+
+A client using the code should depend upon the public behavior of the class, in this case, being able to set the width and height. That is also part of the contract of the Rectangle class and it must be adhered by the Square class, or an class extanding the Rectangle class. The contract specifies how methods should behave and what clients can expect, thereby ensuring the correctness of the program.
