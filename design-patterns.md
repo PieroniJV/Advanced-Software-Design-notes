@@ -12,7 +12,7 @@
 
 - <u>Abstraction:</u> Defines a high-level interface that the client uses. This contains a reference to the implementation and delegates the actual implementation to the Implementor interface. This abstraction can be extended and more details added to it if needed.
 - <u>Implementors:</u> Declares the interface for the implementation classes. Does not have to correspond directly to the abstraction interface and can be different.
-- <u>Concrete Implementor: Implements the Implementor interface and provides implementations for the low-level operations. 
+- <u>Concrete Implementor:</u> Implements the Implementor interface and provides implementations for the low-level operations. 
 
 ### Java Example:
 
@@ -312,6 +312,67 @@ public class Client {
 - This pattern can be used to **decouple** the client code from the inner workings of the system and also to **reduce dependencies** between the *client* and individual *components* of the subsystem.
 
 ---
+## <u>Adapter pattern</u>
+---
+
+- This is a pattern that **allows objects with incompatible interfaces to work together**. This is done without modifying their source code. This pattern is useful for an interface that doesn't work with the client code.
+
+### Components:
+
+- <u>Target:</u> Defines the interface that the client code expects.
+- <u>Adapter:</u> This implements the *Target* interface while containing an instance of the *Adaptee*. This adapts the *Adaptee's* interface to match the *Target* interface. It acts as a translator for the *Adaptee*. 
+- <u>Adaptee:</u> This is the class or interface that needs to be adapted. It has an interface that is incompatible with the *Target* interface.
+
+### Java Example:
+
+- Consider a legacy system that calculates areas of shapes using a `LegacyShapeCalculator`. We want to implement a new code that expects a `Shape` interface for various shape objects. 
+
+```java
+// Target interface
+public interface Shape {
+    double calculateArea();
+}
+
+// Adaptee (legacy code)
+public class LegacyShapeCalculator {
+    public double calculateAreaOfSquare(double side) {
+        return side * side;
+    }
+}
+
+// Adapter
+public class SquareAdapter implements Shape {
+    private LegacyShapeCalculator legacyCalculator;
+
+    public SquareAdapter(LegacyShapeCalculator legacyCalculator) {
+        this.legacyCalculator = legacyCalculator;
+    }
+
+    @Override
+    public double calculateArea() {
+        double side = 5.0; // Assume a default side length
+        return legacyCalculator.calculateAreaOfSquare(side);
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        LegacyShapeCalculator legacyCalculator = new LegacyShapeCalculator();
+        Shape square = new SquareAdapter(legacyCalculator);
+
+        double area = square.calculateArea();
+        System.out.println("Area of square: " + area);
+    }
+}
+
+``` 
+- <u>Target:</u> This is the interface that the client code will interact with. 
+- <u>Adaptee:</u> This is the incompatible legacy class that calculates the area of a square.
+- <u>Adapter:</u> This implements the `Shape` interface for the client to use in the future. It instantiates the `LegacyShapeCalculator` to adapt it to the new code. It adapts the method used to calculate the area from the legacy code so it can be re-used as `calculateArea()`
+- <u>Client:</u> The client passes the instance of the legacy calculator to the `Shape` object so that the legacy code can be used. It then interacts with the `square` object(not, the legacy calculator object).
+
+### Conclusion
+- This pattern allows for incompatible code to be used through an interface that interprets that code and allows the user to access its functionalities. The user "believes" that it is communicating with the *Adaptee* and instead, it talks to the *Adapter*.
 ## <u>New pattern</u>
 ---
 
@@ -332,7 +393,6 @@ public class Client {
 - <u>:</u> 
 
 ### Conclusion
-
 
 
 
