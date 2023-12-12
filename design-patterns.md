@@ -251,19 +251,65 @@ The decorator pattern allows you to create a flexible and extensible system wher
 ### Components:
 
 - <u>Facade:</u> Defines a simplified interface to the subsystem. Manages interactions between client and subsystem. Does not perform actual work, instead, it delegates it to the subsystem components.  
-- <u>:</u>  
+- <u>Subsystems:</u> These are classes/interfaces that perform specific tasks. The *Facade Pattern* does not eliminate the complexity of the subsystem; It provides a more convenient way to access it.  
 
 ### Java Example:
 
-- 
+- Let's use a home theater system as an example of this design pattern. The classes `DVDPlayer`, `Amplifier` and `Projector` are individual components of the subsystem and they perform specific actions.
 
 ```java
+// Facade
+public class HomeTheaterFacade {
+    private DVDPlayer dvdPlayer; // Individual component
+    private Amplifier amplifier; // Individual component
+    private Projector projector; // Individual component
 
+    public HomeTheaterFacade(DVDPlayer dvdPlayer, Amplifier amplifier, Projector projector) {
+        this.dvdPlayer = dvdPlayer;
+        this.amplifier = amplifier;
+        this.projector = projector;
+    }
+
+    public void watchMovie(String movie) {
+        System.out.println("Get ready to watch a movie...");
+        projector.on();
+        amplifier.on();
+        dvdPlayer.on();
+        dvdPlayer.play(movie);
+    }
+
+    public void endMovie() {
+        System.out.println("Shutting down the home theater...");
+        dvdPlayer.off();
+        amplifier.off();
+        projector.off();
+    }
+}
+
+// Client
+public class Client {
+    public static void main(String[] args) {
+        DVDPlayer dvdPlayer = new DVDPlayer();
+        Amplifier amplifier = new Amplifier();
+        Projector projector = new Projector();
+
+        HomeTheaterFacade facade = new HomeTheaterFacade(dvdPlayer, amplifier, projector);
+
+        facade.watchMovie("Inception"); // Client accesses facade to perform the action of watching a movie.
+        System.out.println("Enjoying the movie...");
+
+        facade.endMovie();
+    }
+}
 
 ``` 
-- <u>:</u> 
+- <u>Components:</u> These have specific actions they can perform. The client can use these functions but never by directly accessing them. 
+- <u>Facade:</u> The facade gathers all the functionality from the individual components and gives the user a simpler way to use them. The client calls the function `watchMovie()` but is the interface that tells the components to turn on, etc, for the client to watch the movie.
+- <u>Client:</u> The client knows how to watch a movie and how to end a movie. The low-level actions needed for these to happen are dealt with by the components, the user does not know and does not care about how it is done.
 
 ### Conclusion
+
+- This pattern can be used to **decouple** the client code from the inner workings of the system and also to **reduce dependencies** between the *client* and individual *components* of the subsystem.
 
 ---
 ## <u>New pattern</u>
