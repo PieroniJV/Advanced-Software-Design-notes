@@ -1,7 +1,14 @@
-<h1>Design Patterns</h1>
+# Design Patterns
+
+## Table of Contents
+
+- [Bridge Pattern](#bridge-pattern)
+- [Decorator Pattern](#decorator-pattern)
+- [Facade Pattern](#facade-pattern)
+- [Adapter Pattern](#adapter-pattern)
 
 ---
-## <u>Bridge Pattern</u>
+## Bridge Pattern
 ---
 
 - Separates abstraction from implementation. 
@@ -102,7 +109,7 @@ The bridge pattern allows the same service to be used by different platforms, wi
 Shape and Colour hierarchies can be extended independently of one another
 
 ---
-## <u>Decorator pattern</u>
+## Decorator pattern
 ---
 
 - Allows behavior to be added to individual objects statically or dynamically, without affecting the behavior of other objects from the same class.
@@ -243,7 +250,7 @@ public class Client {
 The decorator pattern allows you to create a flexible and extensible system where you can add new functionalities(Decorators) to objects(Components) without changing their structure. In the example above, the cost and description are dynamically adjusted based on the added decorators.
 
 ---
-## <u>Facade pattern</u>
+## Facade pattern
 ---
 
 - A *Facade* pattern provides a simplified interface to a complex system. It acts as a unified high-level interface to a set of interfaces and/or classes within a subsystem **hiding the complexity** of the subsystem from clients.
@@ -312,7 +319,7 @@ public class Client {
 - This pattern can be used to **decouple** the client code from the inner workings of the system and also to **reduce dependencies** between the *client* and individual *components* of the subsystem.
 
 ---
-## <u>Adapter pattern</u>
+## Adapter pattern
 ---
 
 - This is a pattern that **allows objects with incompatible interfaces to work together**. This is done without modifying their source code. This pattern is useful for an interface that doesn't work with the client code.
@@ -373,7 +380,7 @@ public class Client {
 
 ### Conclusion
 - This pattern allows for incompatible code to be used through an interface that interprets that code and allows the user to access its functionalities. The user "believes" that it is communicating with the *Adaptee* and instead, it talks to the *Adapter*.
-## <u>New pattern</u>
+## New pattern
 ---
 
 - 
