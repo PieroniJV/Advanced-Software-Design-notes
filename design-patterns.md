@@ -6,6 +6,8 @@
 - [Decorator Pattern](#decorator-pattern)
 - [Facade Pattern](#facade-pattern)
 - [Adapter Pattern](#adapter-pattern)
+- [Strategy Pattern](#strategy-pattern)
+- [State Pattern](#state-pattern)
 
 ---
 ## Bridge Pattern
@@ -380,7 +382,101 @@ public class Client {
 
 ### Conclusion
 - This pattern allows for incompatible code to be used through an interface that interprets that code and allows the user to access its functionalities. The user "believes" that it is communicating with the *Adaptee* and instead, it talks to the *Adapter*.
-## New pattern
+
+---
+## Strategy pattern
+---
+
+- This is a **behavioral design pattern** that defines a family of algorithms, encapsulates each one and makes them interchangeable. It allows a client to choose the appropriate algorithm from the family of algorithms at runtime. 
+
+### Components:
+
+- <u>Strategy Interface:</u> This defines the common interface for all *concrete strategies* and consists of one or more methods that represent the algorithm. 
+
+- <u>Concrete Strategies:</u> This implements the *strategy interface* and provides specific implementations for the algorithms.
+
+- <u>Context:</u> This references the current strategy and **allows the client to switch between different strategies**. It invokes the algorithm through the *strategy interface*.
+
+### Java Example:
+
+- Consider a payment system that can use different payment methods(strategies), such as card, PayPal or cash.
+
+```java
+
+// Strategy Interface
+public interface PaymentStrategy {
+    void pay(int amount);
+}
+
+// Concrete Strategies
+public class CreditCardPayment implements PaymentStrategy {
+    @Override
+    public void pay(int amount) {
+        System.out.println("Paid " + amount + " dollars using credit card.");
+    }
+}
+
+public class PayPalPayment implements PaymentStrategy {
+    @Override
+    public void pay(int amount) {
+        System.out.println("Paid " + amount + " dollars using PayPal.");
+    }
+}
+
+public class CashPayment implements PaymentStrategy {
+    @Override
+    public void pay(int amount) {
+        System.out.println("Paid " + amount + " dollars in cash.");
+    }
+}
+
+// Context
+public class ShoppingCart {
+    private PaymentStrategy paymentStrategy;
+
+    public void setPaymentStrategy(PaymentStrategy paymentStrategy) {
+        this.paymentStrategy = paymentStrategy;
+    }
+
+    public void checkout(int amount) {
+        paymentStrategy.pay(amount);
+    }
+}
+
+// Client Code
+public class Client {
+    public static void main(String[] args) {
+        ShoppingCart cart = new ShoppingCart();
+
+        // Select a payment strategy
+        PaymentStrategy creditCardPayment = new CreditCardPayment();
+        PaymentStrategy paypalPayment = new PayPalPayment();
+        PaymentStrategy cashPayment = new CashPayment();
+
+        // Set the selected strategy and checkout
+        cart.setPaymentStrategy(creditCardPayment);
+        cart.checkout(100);
+
+        cart.setPaymentStrategy(paypalPayment);
+        cart.checkout(50);
+
+        cart.setPaymentStrategy(cashPayment);
+        cart.checkout(30);
+    }
+}
+
+
+``` 
+- <u>Strategy Interface:</u> The `PaymentStrategy` interface defines that any payment method can perform a payment `pay()`.
+
+- <u>Concrete Strategies:</u> These are concrete implementations of each type of payment. They all implement the `PaymentStrategy` interface, as they all `pay()` but this is done differently by each one.
+- <u>Context:</u> The `ShoppingCart` references the current `PaymentStrategy`. It also allows for a different strategy to be set and the `checkout()` method is the one to invoke the `pay()` method of the current set payment strategy.
+- <u>Client:</u> The client instantiates the `ShoppingCart` and a payment strategy. It has to set the strategy to be used and then it can perform a checkout operation. 
+
+### Conclusion
+- This design pattern defines different **strategies** that can all perform the same action. The strategy that will be used can be switched at runtime according to the user's needs.
+---
+## State pattern
 ---
 
 - 
