@@ -8,6 +8,7 @@
 - [Adapter Pattern](#adapter-pattern)
 - [Strategy Pattern](#strategy-pattern)
 - [State Pattern](#state-pattern)
+- [Observer Pattern](#observer-pattern)
 
 ---
 ## Bridge Pattern
@@ -479,6 +480,192 @@ public class Client {
 ## State pattern
 ---
 
+- TO-DO
+
+### Components:
+
+- <u>:</u> 
+
+### Java Example:
+
+- Fan example: This is a fan with different states(speeds). The fan state interface defines the behavior according to the state it currently is and the state can be changed by "pulling the chain". The state transitions are handled by the state objects, and the fan's behavior changes accordingly.
+
+```java
+
+// State Interface
+public interface FanState {
+    void pullChain(Fan fan);
+}
+
+// Concrete State Classes
+public class OffState implements FanState {
+    @Override
+    public void pullChain(Fan fan) {
+        System.out.println("Turning fan on to low.");
+        fan.setState(new LowState());
+    }
+}
+
+public class LowState implements FanState {
+    @Override
+    public void pullChain(Fan fan) {
+        System.out.println("Increasing fan speed to medium.");
+        fan.setState(new MediumState());
+    }
+}
+
+public class MediumState implements FanState {
+    @Override
+    public void pullChain(Fan fan) {
+        System.out.println("Increasing fan speed to high.");
+        fan.setState(new HighState());
+    }
+}
+
+public class HighState implements FanState {
+    @Override
+    public void pullChain(Fan fan) {
+        System.out.println("Turning fan off.");
+        fan.setState(new OffState());
+    }
+}
+
+// Context
+public class Fan {
+    private FanState state;
+
+    public Fan() {
+        state = new OffState();
+    }
+
+    public void pullChain() {
+        state.pullChain(this);
+    }
+
+    public void setState(FanState state) {
+        this.state = state;
+    }
+}
+
+// Client Code
+public class Client {
+    public static void main(String[] args) {
+        Fan fan = new Fan();
+
+        // Change fan state by pulling the chain
+        fan.pullChain();
+        fan.pullChain();
+        fan.pullChain();
+        fan.pullChain();
+    }
+}
+
+
+``` 
+- <u>:</u> 
+
+### Conclusion
+
+---
+## Observer pattern
+---
+TO-DO
+- This pattern defines a one-to-many dependency between objects. In this pattern, when one object (the subject or observable) changes its state, all its dependents (observers) are notified and updated automatically. It's often used in scenarios where one object's state change should trigger actions or updates in other objects. It allows you to create loosely coupled systems where subjects and observers can vary independently. It's commonly used in user interfaces, event handling, and many other scenarios where changes in one part of the system should trigger actions or updates in other parts.
+
+### Components:
+
+- <u>:</u> 
+
+### Java Example:
+
+- Weather station example: The weather station is the observable. It has a list of observers and it notifies the registered observers when the weather changes by calling the update method on each observer. The client code registers weather displays with the weather station, and when the weather changes, all displays receive and print the updated weather information.
+
+```java
+
+// Subject (Observable)
+public interface WeatherSubject {
+    void registerObserver(WeatherObserver observer);
+    void removeObserver(WeatherObserver observer);
+    void notifyObservers();
+}
+// Observer
+public interface WeatherObserver {
+    void update(String weather);
+}
+// Concrete Subject (Observable)
+import java.util.ArrayList;
+import java.util.List;
+
+public class WeatherStation implements WeatherSubject {
+    private List<WeatherObserver> observers = new ArrayList<>();
+    private String weather;
+
+    @Override
+    public void registerObserver(WeatherObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(WeatherObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (WeatherObserver observer : observers) {
+            observer.update(weather);
+        }
+    }
+
+    public void setWeather(String weather) {
+        this.weather = weather;
+        notifyObservers();
+    }
+}
+// Concrete Observer
+public class WeatherDisplay implements WeatherObserver {
+    private String name;
+
+    public WeatherDisplay(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void update(String weather) {
+        System.out.println(name + " Display: Weather update - " + weather);
+    }
+}
+public class Client {
+    public static void main(String[] args) {
+        WeatherStation weatherStation = new WeatherStation();
+
+        WeatherDisplay display1 = new WeatherDisplay("Display 1");
+        WeatherDisplay display2 = new WeatherDisplay("Display 2");
+        WeatherDisplay display3 = new WeatherDisplay("Display 3");
+
+        weatherStation.registerObserver(display1);
+        weatherStation.registerObserver(display2);
+        weatherStation.registerObserver(display3);
+
+        weatherStation.setWeather("Sunny");
+        weatherStation.setWeather("Rainy");
+
+        weatherStation.removeObserver(display2);
+
+        weatherStation.setWeather("Cloudy");
+    }
+}
+
+
+``` 
+- <u>:</u> 
+
+### Conclusion
+
+---
+## New pattern
+---
+
 - 
 
 ### Components:
@@ -490,6 +677,29 @@ public class Client {
 - 
 
 ```java
+
+
+
+``` 
+- <u>:</u> 
+
+### Conclusion
+---
+## New pattern
+---
+
+- 
+
+### Components:
+
+- <u>:</u> 
+
+### Java Example:
+
+- 
+
+```java
+
 
 
 ``` 
