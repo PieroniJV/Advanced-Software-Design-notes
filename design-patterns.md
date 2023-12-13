@@ -656,17 +656,16 @@ public class Client {
     }
 }
 
-
 ``` 
 - <u>:</u> 
 
 ### Conclusion
 
 ---
-## New pattern
+## Command pattern
 ---
 
-- 
+- The Command pattern is a behavioral design pattern that encapsulates a request or action as an object, thereby allowing you to parameterize clients with queues, requests, and operations. It also allows for the support of undoable operations. In essence, the Command pattern turns a request into a stand-alone object that contains all the information about the request.
 
 ### Components:
 
@@ -674,10 +673,115 @@ public class Client {
 
 ### Java Example:
 
-- 
+- Remote control that controls different electronic devices(receivers): The command interface executes a command. Different command classes implement this interface with actual functions(turn fan on, turn light on, turn light off). The receiver classes get called to perform the actions above. The remote control invokes these methods when a button is pressed. 
 
 ```java
 
+// Command
+public interface Command {
+    void execute();
+}
+// Concrete Command - Light On
+public class LightOnCommand implements Command {
+    private Light light;
+
+    public LightOnCommand(Light light) {
+        this.light = light;
+    }
+
+    @Override
+    public void execute() {
+        light.turnOn();
+    }
+}
+
+// Concrete Command - Fan On
+public class FanOnCommand implements Command {
+    private Fan fan;
+
+    public FanOnCommand(Fan fan) {
+        this.fan = fan;
+    }
+
+    @Override
+    public void execute() {
+        fan.turnOn();
+    }
+}
+
+// Concrete Command - Fan Off
+public class FanOffCommand implements Command {
+    private Fan fan;
+
+    public FanOffCommand(Fan fan) {
+        this.fan = fan;
+    }
+
+    @Override
+    public void execute() {
+        fan.turnOff();
+    }
+}
+// Receiver - Light
+public class Light {
+    public void turnOn() {
+        System.out.println("Light is on");
+    }
+
+    public void turnOff() {
+        System.out.println("Light is off");
+    }
+}
+
+// Receiver - Fan
+public class Fan {
+    public void turnOn() {
+        System.out.println("Fan is on");
+    }
+
+    public void turnOff() {
+        System.out.println("Fan is off");
+    }
+}
+// Invoker - Remote Control
+public class RemoteControl {
+    private Command command;
+
+    public void setCommand(Command command) {
+        this.command = command;
+    }
+
+    public void pressButton() {
+        command.execute();
+    }
+}
+public class Client {
+    public static void main(String[] args) {
+        // Create receivers
+        Light livingRoomLight = new Light();
+        Fan bedroomFan = new Fan();
+
+        // Create commands
+        Command lightOnCommand = new LightOnCommand(livingRoomLight);
+        Command fanOnCommand = new FanOnCommand(bedroomFan);
+        Command fanOffCommand = new FanOffCommand(bedroomFan);
+
+        // Create invokers
+        RemoteControl remote1 = new RemoteControl();
+        RemoteControl remote2 = new RemoteControl();
+
+        // Configure invokers with commands
+        remote1.setCommand(lightOnCommand);
+        remote2.setCommand(fanOnCommand);
+
+        // Press the buttons on the remotes
+        remote1.pressButton(); // Turns on the living room light
+        remote2.pressButton(); // Turns on the bedroom fan
+
+        remote2.setCommand(fanOffCommand);
+        remote2.pressButton(); // Turns off the bedroom fan
+    }
+}
 
 
 ``` 
