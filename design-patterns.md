@@ -9,6 +9,7 @@
 - [Strategy Pattern](#strategy-pattern)
 - [State Pattern](#state-pattern)
 - [Observer Pattern](#observer-pattern)
+- [Command Pattern](#command-pattern)
 
 ---
 ## Bridge Pattern
